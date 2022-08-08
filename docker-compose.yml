@@ -1,0 +1,24 @@
+version: '3.0'
+
+services:
+
+  mysql:
+    image: mysql:latest
+    volumes:
+      - /home/grads/northwind-shippers-jpa/schema:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: c0nygre
+    networks:
+      - mysqlnet
+
+  javaapp:
+    image: shippers-demo:0.0.1
+    environment:
+      DB_HOST: mysql
+    ports:
+      - 8081:8080
+    networks:
+      - mysqlnet
+
+networks:
+  mysqlnet:
